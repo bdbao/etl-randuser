@@ -12,6 +12,8 @@
 
 This project serves as a comprehensive guide to building an end-to-end data engineering pipeline. It covers each stage from data ingestion to processing and finally to storage, utilizing a robust tech stack that includes Apache Airflow, Python, Apache Kafka, Apache Zookeeper, Apache Spark, and Cassandra. Everything is containerized using Docker for ease of deployment and scalability.
 
+<!-- # Ref: https://www.youtube.com/watch?app=desktop&v=GqAcTrqKcrY, https://github.com/airscholar/e2e-data-engineering -->
+
 ## System Architecture
 
 ![System Architecture](img/architecture.png)
@@ -69,7 +71,7 @@ open http://localhost:4040/StreamingQuery
   ```bash
   docker exec -it cassandra cqlsh -u cassandra -p cassandra localhost 9042
       describe spark_streams.created_users;
-      SELECT * from spark_streams.created_users;
+      SELECT * FROM spark_streams.created_users;
   ```
 - Remove all containers:
   ```bash
