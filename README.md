@@ -14,7 +14,7 @@ This project serves as a comprehensive guide to building an end-to-end data engi
 
 ## System Architecture
 
-![System Architecture](architecture.png)
+![System Architecture](img/architecture.png)
 
 The project is designed with the following components:
 
@@ -43,27 +43,27 @@ The project is designed with the following components:
 git clone https://github.com/bdbao/etl-randuser.git
 cd etl-randuser
 
-chmod +x script/entrypoint.sh
+chmod +x scripts/entrypoint.sh
 docker compose up -d
 ```
+- Run DAG in **Airflow UI** (http://localhost:8080, username/pw is `admin`). Waiting until the Scheduler ready to run.
+- View Kafka Consumer:
+  ```bash
+  docker exec -it broker kafka-console-consumer --bootstrap-server broker:29092 --topic users_created --from-beginning
+  ```
 ```bash
 spark-submit --version # e.g: show version 2.12.18-3.5.4. 
 # Then edit .config(...) of create_spark_connection() in spark_stream.py
 
 pip install cassandra-driver # (if not installed)
-spark-submit --master local[2] --packages com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.kafka:kafka-clients:3.5.1 spark_stream.py
+spark-submit --master local[2] --packages com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.kafka:kafka-clients:3.5.1 scripts/spark_stream.py
 
 open http://localhost:4040/StreamingQuery
 ```
 - (Optional) Run in Spark Standalone Mode
   ```bash
-  spark-submit --master spark://localhost:7077 --packages com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.kafka:kafka-clients:3.5.1 spark_stream.py
+  spark-submit --master spark://localhost:7077 --packages com.datastax.spark:spark-cassandra-connector_2.12:3.5.1,org.apache.spark:spark-sql-kafka-0-10_2.12:3.5.1,org.apache.kafka:kafka-clients:3.5.1 scripts/spark_stream.py
   open http://localhost:9090
-  ```
-- Run DAG in **Airflow UI** (http://localhost:8080, username/pw is `admin`).
-- View Kafka Consumer:
-  ```bash
-  docker exec -it broker kafka-console-consumer --bootstrap-server broker:29092 --topic users_created --from-beginning
   ```
 - Open **DataGrip** (or other tools) to view Cassandra Data (username/pw is `cassandra`).
   ```bash
